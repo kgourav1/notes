@@ -126,3 +126,43 @@ document.addEventListener("DOMContentLoaded", () => {
   loadNotes();
   applyDeleteListener();
 });
+
+// Event listeners for touch events
+window.addEventListener("touchstart", startTouchDrag);
+
+function startTouchDrag(e) {
+  const touch = e.touches[0];
+  if (!touch.target.classList.contains("drag")) {
+    return;
+  }
+  e.preventDefault();
+
+  dragTarget = touch.target;
+  dragTarget.parentNode.append(dragTarget);
+  const rect = dragTarget.getBoundingClientRect();
+  lastOffsetX = touch.clientX - rect.left;
+  lastOffsetY = touch.clientY - rect.top;
+  isDragging = true;
+
+  // Attach touchmove and touchend event listeners on window
+  window.addEventListener("touchmove", touchDrag);
+  window.addEventListener("touchend", endTouchDrag);
+}
+
+function touchDrag(e) {
+  if (!isDragging) return;
+
+  const touch = e.touches[0];
+  const newX = touch.clientX - lastOffsetX;
+  const newY = touch.clientY - lastOffsetY;
+
+  dragTarget.style.transform = `translate(${newX}px, ${newY}px)`;
+}
+
+function endTouchDrag() {
+  isDragging = false;
+
+  // Remove touchmove and touchend event listeners from window
+  window.removeEventListener("touchmove", touchDrag);
+  window.removeEventListener("touchend", endTouchDrag);
+}
