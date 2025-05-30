@@ -20,17 +20,6 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
-.sticky {
-  background: #ffeb3b;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: #333;
-  cursor: grab;
-  display: inline-block;
-  padding: 1rem;
-  position: absolute;
-  width: 12.5rem;
-  border-radius: 8px;
-}
 .sticky h3,
 .sticky p {
   color: #333;
@@ -106,4 +95,45 @@ button.button {
 }
 button.button:hover {
   background-color: #42a5f5;
+}
+
+.sticky {
+  position: absolute;
+  min-width: 200px;
+  max-width: 300px;
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: #fffa75;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transform-origin: top center;
+  animation: sway 1s ease-in-out infinite;
+  transition: transform 0.2s ease;
+  cursor: grab;
+}
+
+@keyframes sway {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.sticky::before {
+  content: "📌";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  z-index: 10;
 }
